@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, root_mean_squared_error, mean_absolute_error
 import numpy as np
 import time
 
@@ -149,15 +150,34 @@ pred_test_y = model.predict(X_test)
 
 print("\n========== PREDICTIONS ==========")
 
-print("First 5 predictions:")
-print(pred_test_y[:5])
+print("First 20 predictions:")
+print(pred_test_y[:20])
 
-print("\nFirst 5 actual values:")
-print(y_test.iloc[:5].values)
+print("\nFirst 20 actual values:")
+print(y_test.iloc[:20].values)
+# ==========================================
+# 12. RMSE and MSE Calculation
+# ==========================================
+# For test data
+rmse = root_mean_squared_error(y_test, pred_test_y)
+mse = mean_squared_error(y_test, pred_test_y)
+mae = mean_absolute_error(y_test, pred_test_y)
+# For training data
+train_pred_y = model.predict(X_train)
+train_rmse = root_mean_squared_error(y_train, train_pred_y)
+train_mse = mean_squared_error(y_train, train_pred_y)
+mae_train = mean_absolute_error(y_train, train_pred_y)
 
+print("\n========== ERROR METRICS ==========")
+print("Test RMSE:", rmse)
+print("Test MSE:", mse)
+print("Test MAE:", mae)
+print("Training RMSE:", train_rmse)
+print("Training MSE:", train_mse)
+print("Training MAE:", mae_train)
 
 # ==========================================
-# 12. TRAINING TIME
+# 13. TRAINING TIME
 # ==========================================
 
 end_time = time.time()
